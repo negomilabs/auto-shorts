@@ -1,0 +1,21 @@
+{
+  "name": "stockbot",
+  "version": "1.0.0",
+  "description": "Automatically finds potentially interesting stocks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-automatemorethings:automatemorethings/stockbot.git"
+  },
+  "author": "Automate Things",
+  "license": "MIT",
+  "dependencies": {
+    "@googleapis/sheets": "^5.0.5",
+    "jsdom": "^24.0.0",
+    "pexels": "^1.4.0",
+    "yahoo-finance2": "^2.9.1"
+  }
+}
