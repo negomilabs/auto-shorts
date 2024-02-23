@@ -2,7 +2,7 @@ import yahooFinance from "yahoo-finance2";
 import { scrape } from "./scraper";
 import { roundToDecimals, abbreviateNumber } from "./math";
 
-// Fetches as much stock data as possible using multiple data sources
+// Fetches available stock data using multiple sources
 export default async (stock) => {
   if (!stock) {
     throw new Error("No stock found");
@@ -72,7 +72,7 @@ export default async (stock) => {
     const xpath =
       '//*[@id="Col1-0-Sustainability-Proxy"]/section/div[1]/div/div[1]/div/div[2]/div[1]';
     const score = document.evaluate(xpath, document, null, 2, null).stringValue;
-    data.esg = Number(score) < 20;
+    data.esg = Boolean(score) && Number(score) < 20;
   } catch (error) {
     console.warn("Unable to retrieve all stock details:", error);
   }

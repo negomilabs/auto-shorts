@@ -8,6 +8,6 @@ export async function scrape(url) {
     const { document } = new JSDOM(html).window;
     return document;
   } catch (error) {
-    console.log("Scrape failed:", error);
+    console.warn("Scrape failed:", error);
   }
 }

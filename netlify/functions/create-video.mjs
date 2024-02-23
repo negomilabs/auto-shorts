@@ -1,6 +1,7 @@
 import yahooFinance from "yahoo-finance2";
 import { pickRandom } from "./helpers/math";
 import getStockDetails from "./helpers/get-stock-details";
+import jsonBuilder from "./helpers/video/json-builder";
 
 // Free Yahoo Finance Screeners we will use to find stocks
 const SCREENERS = {
@@ -52,21 +53,23 @@ async function pickTechStock() {
 export default async (req, context) => {
   const screener = pickRandom(Object.keys(SCREENERS));
 
-  let data;
+  let stock;
 
   switch (screener) {
     case "value":
-      data = await pickValueStock();
+      stock = await pickValueStock();
       break;
     case "growth":
-      data = await pickGrowthStock();
+      stock = await pickGrowthStock();
       break;
     case "tech":
-      data = await pickTechStock();
+      stock = await pickTechStock();
       break;
     default:
       throw new Error(`${screener} screener doesn't exist`);
   }
 
-  return new Response(JSON.stringify(data));
+  const json = await jsonBuilder(stock, screener);
+
+  return new Response(JSON.stringify(json));
 };
