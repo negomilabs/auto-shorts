@@ -25,7 +25,8 @@ async function pickStock(screenerId) {
     stocks = error?.result?.quotes;
 
     if (!stocks) {
-      throw new Error("Accessing screener failed:", error);
+      console.error(error);
+      throw new Error("Accessing screener failed");
     }
   }
 

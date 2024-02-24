@@ -26,7 +26,7 @@ export default async (stock) => {
     ),
     revenueGrowth: null,
     dividendYield: stock.dividendYield,
-    averageAnalystRating: stock.averageAnalystRating,
+    averageAnalystRating: stock.averageAnalystRating || "",
     priceTargetUpside: null,
     esg: null,
   };
@@ -78,4 +78,4 @@ export default async (stock) => {
   }
 
   return data;
-}
+};
