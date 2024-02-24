@@ -11,7 +11,7 @@ export default async (stock) => {
   const data = {
     symbol: stock.symbol,
     company: stock.longName,
-    displayName: stock.displayName,
+    displayName: stock.displayName || stock.shortName || stock.longName,
     website: null,
     description: null,
     sector: null,
