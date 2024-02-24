@@ -2,7 +2,7 @@ import { SEGMENT_NAMES, SEGMENT_LENGTHS } from "./constants";
 import segmentBuilder from "./segment-builder";
 
 export default async (stock, screener) => {
-  const segments = [
+  const segmentList = [
     SEGMENT_NAMES.dividend,
     SEGMENT_NAMES.esg,
     SEGMENT_NAMES.rating,
@@ -10,24 +10,24 @@ export default async (stock, screener) => {
     SEGMENT_NAMES.outro,
   ];
 
-  // We want to include some different segments depending on the screener type
+  // We want to start with different segments depending on the screener type
   switch (screener) {
     case "value":
-      segments.unshift(
+      segmentList.unshift(
         SEGMENT_NAMES.peRatio,
         SEGMENT_NAMES.pegRatio,
         SEGMENT_NAMES.marketCap
       );
       break;
     case "growth":
-      segments.unshift(
+      segmentList.unshift(
         SEGMENT_NAMES.peRatio,
         SEGMENT_NAMES.pegRatio,
         SEGMENT_NAMES.epsChange
       );
       break;
     case "tech":
-      segments.unshift(
+      segmentList.unshift(
         SEGMENT_NAMES.revenueGrowth,
         SEGMENT_NAMES.epsChange,
         SEGMENT_NAMES.techSector
@@ -37,13 +37,25 @@ export default async (stock, screener) => {
       throw new Error(`${screener} screener doesn't exist`);
   }
 
+  // Dynamically generate clips for video segments
+  let segments;
+  try {
+    segments = await Promise.all(
+      segmentList.map((segment) =>
+        segmentBuilder[segment]({ ...stock, screener })
+      )
+    );
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error generating segments");
+  }
+
   // Keep track of time so we know when to start each subsequent segment
   let timeCount = SEGMENT_LENGTHS.intro;
 
-  // Dynamically generate video segments, add correct timing, and convert to tracks
+  // Convert vertical segments to horizontal tracks, and add correct timing
   const tracks = segments.reduce(
-    (acc, segment) => {
-      const clips = segmentBuilder[segment]({ ...stock, screener });
+    (acc, clips) => {
       if (clips) {
         clips.forEach((clip, trackIndex) => {
           if (clip) {
@@ -64,9 +76,12 @@ export default async (stock, screener) => {
     Array.from({ length: 4 }, () => ({ clips: [] }))
   );
 
-  // Generate intro last once we know how many 'reasons' we are including
+  // Generate intro now we know how many 'reasons' we are including
   const reasonsCount = tracks[0].clips.length - 1; // Subtracting one for outro
-  const intro = segmentBuilder[SEGMENT_NAMES.intro](stock.symbol, reasonsCount);
+  const intro = await segmentBuilder[SEGMENT_NAMES.intro](
+    stock.symbol,
+    reasonsCount
+  );
   intro.forEach((clip, index) => clip && tracks[index].clips.unshift(clip));
 
   return {
