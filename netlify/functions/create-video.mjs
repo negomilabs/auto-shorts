@@ -11,12 +11,12 @@ const SCREENERS = {
 };
 
 // Selects a random stock from the specified Yahoo Finance Screener
-async function pickStock(screener) {
+async function pickStock(screenerId) {
   let stocks = [];
 
   try {
     const result = await yahooFinance.screener({
-      scrIds: screener,
+      scrIds: screenerId,
       count: 250,
     });
     stocks = result.quotes;
@@ -29,46 +29,13 @@ async function pickStock(screener) {
     }
   }
 
-  return pickRandom(stocks);
+  const stock = await pickRandom(stocks);
+  return getStockDetails(stock);
 }
 
-async function pickValueStock() {
-  const stock = await pickStock(SCREENERS.value);
-  const details = await getStockDetails(stock);
-  return details;
-}
-
-async function pickGrowthStock() {
-  const stock = await pickStock(SCREENERS.growth);
-  const details = await getStockDetails(stock);
-  return details;
-}
-
-async function pickTechStock() {
-  const stock = await pickStock(SCREENERS.tech);
-  const details = await getStockDetails(stock);
-  return details;
-}
-
-export default async (req, context) => {
+export default async () => {
   const screener = pickRandom(Object.keys(SCREENERS));
-
-  let stock;
-
-  switch (screener) {
-    case "value":
-      stock = await pickValueStock();
-      break;
-    case "growth":
-      stock = await pickGrowthStock();
-      break;
-    case "tech":
-      stock = await pickTechStock();
-      break;
-    default:
-      throw new Error(`${screener} screener doesn't exist`);
-  }
-
+  const stock = await pickStock(SCREENERS[screener]);
   const json = await jsonBuilder(stock, screener);
 
   return new Response(JSON.stringify(json));
