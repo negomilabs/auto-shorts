@@ -76,8 +76,13 @@ export default async (stock, screener) => {
     Array.from({ length: 4 }, () => ({ clips: [] }))
   );
 
-  // Generate intro now we know how many 'reasons' we are including
+  // Check we have enough reasons to pick the stock
   const reasonsCount = tracks[0].clips.length - 1; // Subtracting one for outro
+  if (reasonsCount < 2) {
+    throw new Error("Not enough reasons");
+  }
+
+  // Generate intro now we know how many reasons we are including
   const intro = await segmentBuilder[SEGMENT_NAMES.intro](
     stock.symbol,
     reasonsCount
@@ -93,8 +98,8 @@ export default async (stock, screener) => {
       format: "mp4",
       fps: 25,
       size: {
-        width: 1080,
-        height: 1920,
+        width: 720,
+        height: 1280,
       },
       destinations: [],
     },

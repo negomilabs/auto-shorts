@@ -1,7 +1,7 @@
 import yahooFinance from "yahoo-finance2";
 import { pickRandom } from "./helpers/math";
 import getStockDetails from "./helpers/get-stock-details";
-import jsonBuilder from "./helpers/video/json-builder";
+import buildShotstackJSON from "./helpers/video/json-builder";
 
 // Free Yahoo Finance Screeners we will use to find stocks
 const SCREENERS = {
@@ -36,8 +36,22 @@ async function pickStock(screenerId) {
 
 export default async () => {
   const screener = pickRandom(Object.keys(SCREENERS));
-  const stock = await pickStock(SCREENERS[screener]);
-  const json = await jsonBuilder(stock, screener);
+  let stock;
+  let json;
+
+  try {
+    stock = await pickStock(SCREENERS[screener]);
+    json = await buildShotstackJSON(stock, screener);
+  } catch (error) {
+    // Some stocks might have only one reason, in which case try a second time
+    if (error.message === "Not enough reasons") {
+      console.warn(
+        `Minimum reasons requirement not met for ${stock}, retrying...`
+      );
+      stock = await pickStock(SCREENERS[screener]);
+      json = await buildShotstackJSON(stock, screener);
+    }
+  }
 
   return new Response(JSON.stringify(json));
 };
