@@ -1,7 +1,7 @@
 export const textClip = (text, length, position = "center") => ({
   asset: {
     type: "html",
-    width: 600,
+    width: 580,
     height: 720,
     position,
     html: `<p data-html-type=\"text\">${text}</p>`,
@@ -43,4 +43,14 @@ export const audioClip = (url, length) => ({
   },
   start: 0,
   length,
+});
+
+export const imageClip = (url, length) => ({
+  asset: {
+    type: "image",
+    src: url,
+  },
+  start: 0,
+  length,
+  scale: 0.06,
 });

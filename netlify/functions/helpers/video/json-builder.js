@@ -1,5 +1,5 @@
 import { audioClip } from "./clip-templates";
-import { SEGMENT_NAMES, SEGMENT_LENGTHS } from "./constants";
+import { SEGMENT_NAMES, SEGMENT_LENGTHS, BACKGROUND_MUSIC } from "./constants";
 import segmentBuilder from "./segment-builder";
 
 export default async (stock, screener) => {
@@ -91,8 +91,7 @@ export default async (stock, screener) => {
   intro.forEach((clip, index) => clip && tracks[index].clips.unshift(clip));
 
   // Add some music
-  const src =
-    "https://shotstack-ingest-api-v1-sources.s3.ap-southeast-2.amazonaws.com/sdpzx9g7vu/zzy8m3hh-2lbi-mo0j-rbxx-3rhvab0jckvr/source.mp3";
+  const src = BACKGROUND_MUSIC;
   tracks.push({ clips: [audioClip(src, timeCount)] });
 
   return {

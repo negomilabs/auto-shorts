@@ -1,6 +1,11 @@
-import { SEGMENT_NAMES, SEGMENT_LENGTHS, VIDEO_COLLECTIONS } from "./constants";
+import {
+  SEGMENT_NAMES,
+  SEGMENT_LENGTHS,
+  VIDEO_COLLECTIONS,
+  POINTING_DOWN_EMOJI,
+} from "./constants";
 import { pickVideoFromCollections } from "./stock-footage";
-import { textClip, videoClip } from "./clip-templates";
+import { textClip, videoClip, imageClip } from "./clip-templates";
 import { firstCaption } from "./text-variations";
 
 export default {
@@ -27,12 +32,8 @@ export default {
     );
     return [
       textClip(`${peRatio} P/E ratio`, SEGMENT_LENGTHS.long, "top"),
-      textClip("👇", SEGMENT_LENGTHS.long),
-      textClip(
-        "Available at a bargain price 👍💵",
-        SEGMENT_LENGTHS.long,
-        "bottom"
-      ),
+      imageClip(POINTING_DOWN_EMOJI, SEGMENT_LENGTHS.long),
+      textClip("Available at a bargain price", SEGMENT_LENGTHS.long, "bottom"),
       videoClip(url, SEGMENT_LENGTHS.long),
     ];
   },
@@ -50,9 +51,11 @@ export default {
         SEGMENT_LENGTHS.long,
         "top"
       ),
-      textClip("👇", SEGMENT_LENGTHS.long),
+      imageClip(POINTING_DOWN_EMOJI, SEGMENT_LENGTHS.long),
       textClip(
-        `Undervalued ${screener === "growth" ? "growth " : ""}stock 👌🤑`,
+        screener === "growth"
+          ? "Undervalued growth stock"
+          : "Stock is potentially undervalued",
         SEGMENT_LENGTHS.long,
         "bottom"
       ),
@@ -74,9 +77,9 @@ export default {
         SEGMENT_LENGTHS.long,
         "top"
       ),
-      textClip("👇", SEGMENT_LENGTHS.long),
+      imageClip(POINTING_DOWN_EMOJI, SEGMENT_LENGTHS.long),
       textClip(
-        `Large, stable & well-established company 💼🤝🏢`,
+        `Large, stable & established company`,
         SEGMENT_LENGTHS.long,
         "bottom"
       ),
@@ -84,7 +87,7 @@ export default {
     ];
   },
   [SEGMENT_NAMES.epsChange]: async ({ epsGrowth }) => {
-    if (!epsGrowth || epsGrowth < 0) {
+    if (!epsGrowth || epsGrowth < 25) {
       return;
     }
     const url = await pickVideoFromCollections(
@@ -98,8 +101,8 @@ export default {
         SEGMENT_LENGTHS.long,
         "top"
       ),
-      textClip("👇", SEGMENT_LENGTHS.long),
-      textClip(`Solid profit growth 🚀🎯💪`, SEGMENT_LENGTHS.long, "bottom"),
+      imageClip(POINTING_DOWN_EMOJI, SEGMENT_LENGTHS.long),
+      textClip(`Solid profit growth`, SEGMENT_LENGTHS.long, "bottom"),
       videoClip(url, SEGMENT_LENGTHS.long),
     ];
   },
@@ -114,16 +117,16 @@ export default {
         SEGMENT_LENGTHS.long,
         "top"
       ),
-      textClip("👇", SEGMENT_LENGTHS.long),
-      textClip(`Revenue is increasing 🌱📈`, SEGMENT_LENGTHS.long, "bottom"),
+      imageClip(POINTING_DOWN_EMOJI, SEGMENT_LENGTHS.long),
+      textClip(`Revenue is increasing`, SEGMENT_LENGTHS.long, "bottom"),
       videoClip(url, SEGMENT_LENGTHS.long),
     ];
   },
   [SEGMENT_NAMES.techSector]: async () => {
     const url = await pickVideoFromCollections(VIDEO_COLLECTIONS.tech);
     return [
-      textClip(`Tech sector 🌐💻🤖`, SEGMENT_LENGTHS.long, "top"),
-      textClip("👇", SEGMENT_LENGTHS.long),
+      textClip(`Tech sector`, SEGMENT_LENGTHS.long, "top"),
+      imageClip(POINTING_DOWN_EMOJI, SEGMENT_LENGTHS.long),
       textClip(`Exciting growth potential`, SEGMENT_LENGTHS.long, "bottom"),
       videoClip(url, SEGMENT_LENGTHS.long),
     ];
@@ -134,10 +137,7 @@ export default {
     }
     const url = await pickVideoFromCollections(VIDEO_COLLECTIONS.money);
     return [
-      textClip(
-        `Pays a ${dividendYield}% dividend 💰🙌`,
-        SEGMENT_LENGTHS.default
-      ),
+      textClip(`Pays a ${dividendYield}% dividend`, SEGMENT_LENGTHS.default),
       null,
       null,
       videoClip(url, SEGMENT_LENGTHS.default),
@@ -151,7 +151,7 @@ export default {
     const url = await pickVideoFromCollections(VIDEO_COLLECTIONS.business);
     return [
       textClip(
-        `Analysts currently rate ${symbol} a ${rating} ✅🏆`,
+        `Analysts currently rate ${symbol} a ${rating}`,
         SEGMENT_LENGTHS.default
       ),
       null,
@@ -169,12 +169,12 @@ export default {
     );
     return [
       textClip(
-        `${priceTargetUpside}% potential upside over the next year (based on analyst price targets) 💸⬆️`,
-        SEGMENT_LENGTHS.default
+        `${priceTargetUpside}% potential upside over the next year (based on analyst price targets)`,
+        SEGMENT_LENGTHS.long
       ),
       null,
       null,
-      videoClip(url, SEGMENT_LENGTHS.default),
+      videoClip(url, SEGMENT_LENGTHS.long),
     ];
   },
   [SEGMENT_NAMES.esg]: async ({ esg }) => {
@@ -185,7 +185,7 @@ export default {
       VIDEO_COLLECTIONS.sustainability
     );
     return [
-      textClip(`Strong ESG profile ♻️🌍`, SEGMENT_LENGTHS.short),
+      textClip(`Strong ESG profile`, SEGMENT_LENGTHS.short),
       null,
       null,
       videoClip(url, SEGMENT_LENGTHS.short),
@@ -195,7 +195,7 @@ export default {
     const url = await pickVideoFromCollections(VIDEO_COLLECTIONS.abstract);
     return [
       textClip(
-        `Learn more about ${company} in the description 👇`,
+        `Learn more about ${company} in the description...`,
         SEGMENT_LENGTHS.default
       ),
       null,
