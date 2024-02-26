@@ -1,6 +1,7 @@
 import { SEGMENT_NAMES, SEGMENT_LENGTHS, VIDEO_COLLECTIONS } from "./constants";
 import { pickVideoFromCollections } from "./stock-footage";
 import { textClip, videoClip } from "./clip-templates";
+import { firstCaption } from "./text-variations";
 
 export default {
   [SEGMENT_NAMES.intro]: async (symbol, count) => {
@@ -9,10 +10,7 @@ export default {
       VIDEO_COLLECTIONS.investing
     );
     return [
-      textClip(
-        `${count} reasons why ${symbol} stock is interesting right now 👉`,
-        SEGMENT_LENGTHS.intro
-      ),
+      textClip(firstCaption(symbol, count), SEGMENT_LENGTHS.intro),
       null,
       null,
       videoClip(url, SEGMENT_LENGTHS.intro),
