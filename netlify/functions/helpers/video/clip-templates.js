@@ -1,11 +1,11 @@
 export const textClip = (text, length, position = "center") => ({
   asset: {
     type: "html",
-    width: 800,
-    height: 1000,
+    width: 600,
+    height: 720,
     position,
     html: `<p data-html-type=\"text\">${text}</p>`,
-    css: "p { color: #ffffff; font-size: 80px; font-family: 'Montserrat SemiBold'; text-align: center; text-scale: shrink; }",
+    css: "p { color: #ffffff; font-size: 55px; font-family: 'Montserrat SemiBold'; text-align: center; text-scale: shrink; }",
   },
   start: 0,
   length,
@@ -32,4 +32,15 @@ export const videoClip = (url, length) => ({
   },
   position: "center",
   opacity: 0.6,
+});
+
+export const audioClip = (url, length) => ({
+  asset: {
+    type: "audio",
+    src: url,
+    volume: 1,
+    effect: "fadeOut",
+  },
+  start: 0,
+  length,
 });
