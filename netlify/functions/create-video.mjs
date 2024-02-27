@@ -39,11 +39,12 @@ export default async () => {
   let stock;
   let json;
 
+  // Pick a stock and generate JSON required by Shotstack
   try {
     stock = await pickStock(SCREENERS[screener]);
     json = await buildShotstackJSON(stock, screener);
   } catch (error) {
-    // Some stocks might have only one reason, in which case try a second time
+    // Some stocks might have only one reason, in which case try one more time
     if (error.message === "Not enough reasons") {
       console.warn(
         `Minimum reasons requirement not met for ${stock}, retrying...`
@@ -53,5 +54,20 @@ export default async () => {
     }
   }
 
-  return new Response(JSON.stringify(json));
+  // Send JSON to Shotstack to render as a video
+  try {
+    const response = await fetch("https://api.shotstack.io/v1/render", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": process.env.SHOTSTACK_API_KEY,
+      },
+      body: JSON.stringify(json),
+    });
+    const data = await response.json();
+    console.log("Video render initiated...");
+    return new Response(JSON.stringify(data));
+  } catch (error) {
+    console.error("Video render failed", error);
+  }
 };
