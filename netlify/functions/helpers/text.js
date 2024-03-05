@@ -1,4 +1,4 @@
-import { pickRandom } from "../math";
+import { pickRandom } from "./math";
 
 export const title = (symbol) => {
   return pickRandom([
@@ -43,7 +43,16 @@ export const title = (symbol) => {
     `What's happening with ${symbol} stock? 🤷‍♂️`,
     `${symbol} stock: smart move? 🧠`,
     `${symbol} stock: buy or pass? 🛒🚫`,
-  ])
+  ]);
+};
+
+export const description = (stock) => {
+  return `🏢 ${stock.industry} / ${stock.sector}
+🌐 ${stock.website}
+  
+${stock.description}
+  
+#stockpicks #investing`;
 };
 
 export const firstCaption = (symbol, count) => {

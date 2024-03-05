@@ -6,7 +6,7 @@ import {
 } from "./constants";
 import { pickVideoFromCollections } from "./stock-footage";
 import { textClip, videoClip, imageClip } from "./clip-templates";
-import { firstCaption } from "./text-variations";
+import { firstCaption } from "../text";
 
 export default {
   [SEGMENT_NAMES.intro]: async (symbol, count) => {

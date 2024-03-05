@@ -1,4 +1,6 @@
 import { pickRandom } from "./helpers/math";
+import { description, title } from "./helpers/text";
+import { writeToSheet } from "./helpers/google-sheets";
 import pickStock from "./helpers/yahoo-finance/pick-stock";
 import buildShotstackJSON from "./helpers/video/json-builder";
 
@@ -30,6 +32,14 @@ export default async () => {
       console.error(error);
       throw new Error("Error picking stock or generating JSON");
     }
+  }
+
+  // Generate title/description & write to Google Sheet
+  try {
+    await writeToSheet("A2:B2", [title(stock.symbol), description(stock)]);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error writing title/description to Google Sheet");
   }
 
   // Send JSON to Shotstack to render as a video
