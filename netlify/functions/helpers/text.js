@@ -47,8 +47,9 @@ export const title = (symbol) => {
 };
 
 export const description = (stock) => {
-  return `🏢 ${stock.industry} / ${stock.sector}
+  return `💼 ${stock.displayName}
 🌐 ${stock.website}
+🏢 ${stock.industry} / ${stock.sector}
   
 ${stock.description}
   
