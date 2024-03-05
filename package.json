@@ -1,7 +1,7 @@
 {
   "name": "stockbot",
   "version": "1.0.0",
-  "description": "Automatically finds potentially interesting stocks",
+  "description": "Automatically finds potentially interesting stocks & creates short videos about them",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
