@@ -109,5 +109,6 @@ export default async (stock, screener) => {
       },
       destinations: [],
     },
+    callback: `${process.env.URL}/.netlify/functions/publish-video`
   };
 };
