@@ -2,6 +2,7 @@ import { audioClip } from "./clip-templates";
 import { SEGMENT_NAMES, SEGMENT_LENGTHS, BACKGROUND_MUSIC } from "./constants";
 import segmentBuilder from "./segment-builder";
 
+// Builds JSON config for a single video, correctly formatted for Shotstack
 export default async (stock, screener) => {
   const segmentList = [
     SEGMENT_NAMES.dividend,
