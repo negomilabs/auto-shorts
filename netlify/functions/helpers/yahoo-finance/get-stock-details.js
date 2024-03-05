@@ -70,7 +70,7 @@ export default async (stock) => {
       `https://finance.yahoo.com/quote/${stock.symbol}/sustainability`
     );
     const xpath =
-      '//*[@id="Col1-0-Sustainability-Proxy"]/section/div[1]/div/div[1]/div/div[2]/div[1]';
+      '//*[@id="nimbus-app"]/section/section/section/article/section[2]/section[1]/div/section[1]/div/div/h4';
     const score = document.evaluate(xpath, document, null, 2, null).stringValue;
     data.esg = Boolean(score) && Number(score) < 20;
   } catch (error) {
