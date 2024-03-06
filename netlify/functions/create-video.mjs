@@ -59,3 +59,7 @@ export default async () => {
     console.error("Video render failed", error);
   }
 };
+
+export const config = {
+  schedule: "@daily"
+}
