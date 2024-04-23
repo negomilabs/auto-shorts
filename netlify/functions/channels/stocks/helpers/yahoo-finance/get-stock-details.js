@@ -1,6 +1,6 @@
 import yahooFinance from "yahoo-finance2";
-import { scrape } from "../scraper";
-import { roundToDecimals, abbreviateNumber } from "../math";
+import { scrape } from "../../../../helpers/scraper";
+import { roundToDecimals, abbreviateNumber } from "../../../../helpers/math";
 
 // Fetches available stock data using different methods
 export default async (stock) => {

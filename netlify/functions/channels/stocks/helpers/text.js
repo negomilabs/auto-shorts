@@ -1,4 +1,4 @@
-import { pickRandom } from "./math";
+import { pickRandom } from "../../../helpers/math";
 
 export const title = (symbol) => {
   return pickRandom([

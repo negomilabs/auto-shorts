@@ -1,5 +1,5 @@
 import yahooFinance from "yahoo-finance2";
-import { pickRandom } from "../math";
+import { pickRandom } from "../../../../helpers/math";
 import getStockDetails from "./get-stock-details";
 
 // Selects a random stock from the specified Yahoo Finance Screener

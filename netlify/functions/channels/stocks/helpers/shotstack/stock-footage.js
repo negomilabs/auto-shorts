@@ -1,5 +1,5 @@
 import pexels from "pexels";
-import { pickRandom } from "../math";
+import { pickRandom } from "../../../../helpers/math";
 
 const pexelsAPI = pexels.createClient(process.env.PEXELS_API_KEY);
 

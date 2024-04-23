@@ -1,8 +1,8 @@
-import { pickRandom } from "./helpers/math";
+import { pickRandom } from "../../helpers/math";
 import { description, title } from "./helpers/text";
-import { writeToSheet } from "./helpers/google-sheets";
+import { writeToSheet } from "../../helpers/google-sheets";
 import pickStock from "./helpers/yahoo-finance/pick-stock";
-import buildShotstackJSON from "./helpers/video/json-builder";
+import buildShotstackJSON from "./helpers/shotstack/json-builder";
 
 // Free Yahoo Finance Screeners we will use to find stocks
 const SCREENERS = {
@@ -54,12 +54,8 @@ export default async () => {
     });
     const data = await response.json();
     console.log("Video render initiated...");
-    return new Response(JSON.stringify(data));
+    console.log(data);
   } catch (error) {
     console.error("Video render failed", error);
   }
 };
-
-export const config = {
-  schedule: "@daily"
-}
