@@ -1,16 +1,16 @@
 {
-  "name": "stockbot",
+  "name": "auto-shorts",
   "version": "1.0.0",
-  "description": "Automatically finds potentially interesting stocks & creates short videos about them",
+  "description": "Automatically generates and publishes YouTube Shorts",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com-automatemorethings:automatemorethings/stockbot.git"
+    "url": "git@github.com-negomilabs:negomilabs/auto-shorts.git"
   },
-  "author": "Automate Things",
+  "author": "Negomi Labs",
   "license": "MIT",
   "dependencies": {
     "@googleapis/sheets": "^5.0.5",
